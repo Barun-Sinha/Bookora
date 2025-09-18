@@ -1,14 +1,24 @@
 import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Body from './Components/Body';
+import MainContainer from './Components/MainContainer';
+import Login from './Components/Login';
 
 function App() {
   return (
     <div className="App">
-      <h1>HEllo World</h1>
+
+     <BrowserRouter>
+     <Routes>
+        <Route path='/' element = {<Body/>}>
+            <Route path='/' element = {<MainContainer/>}/>
+            <Route path='/login' element = {<Login/>}/>
+        </Route>
+     </Routes>
+     </BrowserRouter>
     </div>
   );
 }
 
 export default App;
 
-
-// I push the code from main branch but now we have to do the change on stag branch so when i puh thecode in stag it goes to the owner of main branch he have right to push it to maain branch 
