@@ -1,20 +1,49 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, {useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addUser } from "../utils/userSlice";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [showSignIn , setShowSignIn] = useState(false)
+const [userName, setUserName] = useState("barun1");
+const [password, setPassword] = useState("123456");
+// const [email, setEmail] = useState("");
+const [name, setName] = useState("");
+const [showSignIn , setShowSignIn] = useState(false)
+const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // handle login logic here
-    console.log({ email, password });
+
+const dispatch = useDispatch();
+const navigate = useNavigate();
+
+     const handleLogin = async (e) => {
+        e.preventDefault();
+    try {
+      const res = await axios.post(
+       "http://localhost:5000/api/auth/login",
+        {
+          emailOrUsername: userName,
+          password: password,
+        },
+      );
+      dispatch(addUser(res.data));
+      return navigate("/");
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("An unexpected error occurred.");
+      }
+      console.log(err);
+    }   
   };
+
+  
 
   const handelSignIn = () => {
     setShowSignIn(!showSignIn)
   }
+
 
   return (
     <div className="min-h-screen flex items-start justify-center bg-base-200 pt-20">
@@ -24,18 +53,19 @@ const LoginPage = () => {
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
            {showSignIn && <input
             type="name"
-            placeholder="First Name"
+            placeholder="Full Name"
             className="input input-bordered w-full"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />}
+    
           <input
-            type="email"
-            placeholder="Email"
+            type="name"
+            placeholder="Username"
             className="input input-bordered w-full"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
             required
           />
 
@@ -52,13 +82,16 @@ const LoginPage = () => {
             {showSignIn ? "Sign up" : "Login"}
           </button>
         </form>
-
-        <p className="text-center mt-4 text-sm">
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>} 
+        <div className="mt-4 flex gap-2 justify-center items-center">            
+        <p className="text-center  text-sm">
             {showSignIn ? "Already have an account? " : "Don't have an account? "}
-            <a className="text-blue-500 hover:underline" onClick={handelSignIn}>
-                {showSignIn ? "Login" : "Sign-up"}
-            </a>
+           
         </p>
+         <p className="text-blue-500 hover:underline" onClick={handelSignIn}>
+                {showSignIn ? "Login" : "Sign-up"}
+            </p>
+            </div>
       </div>
     </div>
   );
