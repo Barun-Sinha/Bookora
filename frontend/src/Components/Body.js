@@ -7,9 +7,9 @@ const Body = () => {
   return (
     <div>
         <Header/>
-        <div>
+       
             <Outlet/>
-        </div>
+        
         <Footer/>
     </div>
   )
