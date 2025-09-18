@@ -7,7 +7,7 @@ const Header = () => {
       <div className="flex w-full justify-between items-center">
         {/* Left side: Logo / Brand */}
         <Link to="/">
-        <p className="btn btn-ghost text-2xl normal-case">Book Khana</p>
+        <p className="btn btn-ghost text-2xl normal-case">📚 Book Khana</p>
         </Link>
 
         {/* Right side: Login Button */}
