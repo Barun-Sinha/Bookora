@@ -7,7 +7,7 @@ import { addUser } from "../utils/userSlice";
 const LoginPage = () => {
 const [userName, setUserName] = useState("barun1");
 const [password, setPassword] = useState("123456");
-// const [email, setEmail] = useState("");
+const [email, setEmail] = useState("");
 const [name, setName] = useState("");
 const [showSignIn , setShowSignIn] = useState(false)
 const [error, setError] = useState("");
@@ -38,6 +38,27 @@ const navigate = useNavigate();
     }   
   };
 
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+    try{
+        const res = await axios.post("http://localhost:5000/api/auth/register",{
+            username: userName,
+            password: password,
+            fullName: name,
+            email: email
+        });
+        console.log(res.data);
+        setError("");
+
+    }catch(err){
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("An unexpected error occurred.");
+      }
+    }
+}    
   
 
   const handelSignIn = () => {
@@ -50,15 +71,26 @@ const navigate = useNavigate();
       <div className="card w-full max-w-md shadow-xl bg-base-100 p-8">
         <h2 className="text-2xl font-bold mb-6 text-center">{showSignIn ? "Sign-Up" : "Login"}</h2>
 
-        <form onSubmit={handleLogin} className="flex flex-col gap-4">
-           {showSignIn && <input
-            type="name"
-            placeholder="Full Name"
-            className="input input-bordered w-full"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />}
+        <form onSubmit={showSignIn ? registerUser :  handleLogin} className="flex flex-col gap-4">
+           {showSignIn && 
+            <>
+              <input
+                type="name"
+                placeholder="Full Name"
+                className="input input-bordered w-full"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              /> 
+              <input
+              tyre="email"
+              placeholder="Email"
+              className="input input-bordered w-full"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              />
+            </>
+          }
     
           <input
             type="name"
