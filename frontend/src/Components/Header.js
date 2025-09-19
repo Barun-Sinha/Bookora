@@ -11,6 +11,7 @@ const Header = () => {
     navigate('/login');
   }
   return (
+
     <header className="bg-base-100 shadow-md px-6 py-4 sticky top-0 z-50">
       <div className="flex w-full justify-between items-center">
         {/* Left side: Logo + Home */}
