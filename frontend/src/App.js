@@ -5,6 +5,8 @@ import MainContainer from './Components/MainContainer';
 import Login from './Components/Login';
 import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
+import BookDetails from './Components/BookDetails';
+import Cart from './Components/Cart';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
      <Routes>
         <Route path='/' element = {<Body/>}>
             <Route path='/' element = {<MainContainer/>}/>
+            <Route path='/book/:id' element = {<BookDetails/>}/>
+            <Route path='/cart' element = {<Cart/>}/>
             <Route path='/login' element = {<Login/>}/>
         </Route>
      </Routes>

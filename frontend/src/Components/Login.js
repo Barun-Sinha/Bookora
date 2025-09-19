@@ -50,6 +50,11 @@ const navigate = useNavigate();
         });
         console.log(res.data);
         setError("");
+        setUserName("")
+        setPassword("")
+        setName("")
+        setEmail("")
+        setShowSignIn(false)
 
     }catch(err){
       if (err.response && err.response.data && err.response.data.message) {

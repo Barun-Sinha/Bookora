@@ -23,6 +23,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+///Public: Get a single book by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const book = await Book.findById(bookId).populate('authorIds', 'name');
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+    res.json(book);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Protected: Create a new book
 router.post('/', authenticateJWT, authorizeRoles('author', 'admin'), async (req, res) => {
   try {
