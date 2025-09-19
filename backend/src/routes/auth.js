@@ -36,7 +36,16 @@ router.post('/register', async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: `User registered successfully as ${role}` });
+    res.status(201).json({ 
+      message: `User registered successfully as ${role}`,
+      user:{
+        id: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+        fullName: newUser.fullName,
+        role: newUser.role
+      }
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
@@ -70,7 +79,17 @@ router.post('/login', async (req, res) => {
 
     // Send token in HTTP-only cookie
     res.cookie('jwt', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-    res.json({ message: 'Logged in successfully', token });
+    res.json({ 
+      user:{
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        fullName: user.fullName,
+        role: user.role
+      },
+      message: 'Logged in successfully',
+      token
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
