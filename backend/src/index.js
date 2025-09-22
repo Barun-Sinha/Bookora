@@ -9,10 +9,11 @@ import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 import passport from "passport";
-import authRoutes from "./routes/auth.js";
-import bookRoutes from "./routes/books.js";
-import orderRoutes from "./routes/orders.js";
-import authorRoutes from "./routes/authors.js";
+import authRoutes from "./routes/auth.routes.js";
+import bookRoutes from "./routes/book.routes.js";
+import orderRoutes from "./routes/order.routes.js";
+import authorRoutes from "./routes/author.routes.js";
+import adminRoutes from "./routes/admin.routes.js"
 import configurePassport from './config/passport.js';
 
 
@@ -24,6 +25,7 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:3000";
 
 //core middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(compression());
 app.use(cors({ origin: CORS_ORIGIN, credentials: true }));
@@ -39,6 +41,7 @@ app.use('/api/auth',authRoutes);
 app.use('/api/books',bookRoutes);
 app.use('/api/orders',orderRoutes);
 app.use('/api/authors',authorRoutes);
+app.use('/api/admin',adminRoutes)
 
 //Error handling middleware
 app.use((err, req, res, next) => {

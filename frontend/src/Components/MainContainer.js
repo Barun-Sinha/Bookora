@@ -32,6 +32,7 @@ const MainContainer = () => {
         {bookItems.map((book) => (
   
           <div
+            key={book._id}
             className="card bg-base-300 shadow-md hover:shadow-xl transition rounded-lg"
           >
             <DisplayBook 
