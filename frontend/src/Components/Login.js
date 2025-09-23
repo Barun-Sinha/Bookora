@@ -2,7 +2,7 @@ import axios from "axios";
 import React, {useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addUser } from "../utils/userSlice";
+import { login } from "../utils/userSlice";
 
 const LoginPage = () => {
 const [userName, setUserName] = useState("barun1");
@@ -27,7 +27,7 @@ const navigate = useNavigate();
         }, 
         { withCredentials: true }
       );
-      dispatch(addUser(res.data));
+      dispatch(login(res.data.user));
       return navigate("/");
     } catch (err) {
       if (err.response && err.response.data && err.response.data.message) {

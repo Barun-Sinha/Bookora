@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import DisplayBook from "./DisplayBook";
 import Carousel from "./Carousel";
+import { useDispatch } from "react-redux";
+import { setAllBooks } from "../utils/allBooksSlice";
 
 
 const MainContainer = () => {
 
   const [bookItems, setBookItems] = useState([]);
-  console.log("Book Items:", bookItems);
+  const dispatch = useDispatch();
+
 
   // api call to fetch all books from backend 
   const fetchBooks = async () => {
@@ -14,6 +17,7 @@ const MainContainer = () => {
       const response = await fetch("http://localhost:5000/api/books");
       const data = await response.json();
       setBookItems(data);
+      dispatch(setAllBooks(data)); // Dispatch action to update Redux store
     }catch(error){
       console.error("Error fetching books:", error);
     }
@@ -34,7 +38,7 @@ const MainContainer = () => {
         {bookItems.map((book) => (
   
           <div
-          key={book._id}
+            key={book._id}
             className="card bg-base-300 shadow-md hover:shadow-xl transition rounded-lg"
           >
             <DisplayBook 
