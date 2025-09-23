@@ -24,7 +24,8 @@ const navigate = useNavigate();
         {
           emailOrUsername: userName,
           password: password,
-        },
+        }, 
+        { withCredentials: true }
       );
       dispatch(addUser(res.data));
       return navigate("/");
@@ -47,7 +48,10 @@ const navigate = useNavigate();
             password: password,
             fullName: name,
             email: email
-        });
+        },
+       { withCredentials: true}
+      );
+       
         console.log(res.data);
         setError("");
         setUserName("")

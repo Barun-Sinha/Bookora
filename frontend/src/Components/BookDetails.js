@@ -1,10 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { addCart } from "../utils/cartSlice";
+import QuantitySelector from "./QuontitySelector";
 
 const BookDetails = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const isLogin = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  const disp = useDispatch();
+  
+  const AddTocart = () => {
+    
+      if(!isLogin){
+        navigate('/login');
+      } 
+      disp(addCart({
+        id: book._id,
+        title: book.title,
+        price: book.price,
+      }))
+      
+  }
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -51,8 +71,10 @@ const BookDetails = () => {
             Rs. {book.price}
           </p>
 
+          <QuantitySelector/>
+
           <div className="flex gap-4 justify-center mt-2">
-            <button className="btn btn-primary">Add to Cart</button>
+            <button className="btn btn-primary" onClick={()=>AddTocart()}>Add to Cart</button>
             <button className="btn btn-outline">Buy Now</button>
           </div>
 

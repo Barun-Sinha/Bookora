@@ -3,15 +3,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 // component to display individual book details 
-const DisplayBook = ({id, title, price }) => {
+const DisplayBook = ({id, title, price , image }) => {
   return (
     <>
       {/* Wrap the whole card in a Link for details navigation */}
       <Link to={`/book/${id}`} className="no-underline">
         <figure>
           <img
-            src="https://www.quercusbooks.co.uk/wp-content/uploads/2019/01/Spines-website-asset-new-logo.jpg?w=1920&h=560&crop=1"
-            alt={title}
+            src= {image} 
+             alt={title}
             className="h-56 w-full object-cover object-center rounded-t-lg"
           />
         </figure>

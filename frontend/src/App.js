@@ -6,7 +6,7 @@ import Login from './Components/Login';
 import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
 import BookDetails from './Components/BookDetails';
-import Cart from './Components/Cart';
+import Cart from './Components/Cart'; 
 
 function App() {
   return (

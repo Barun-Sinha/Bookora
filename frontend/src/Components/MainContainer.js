@@ -6,6 +6,7 @@ import Carousel from "./Carousel";
 const MainContainer = () => {
 
   const [bookItems, setBookItems] = useState([]);
+  console.log("Book Items:", bookItems);
 
   // api call to fetch all books from backend 
   const fetchBooks = async () => {
@@ -21,6 +22,7 @@ const MainContainer = () => {
   useEffect(() => {
     fetchBooks();
   }, []);
+  
   return (
     <>
     <main className="container mx-auto px-6 py-10">
@@ -32,12 +34,14 @@ const MainContainer = () => {
         {bookItems.map((book) => (
   
           <div
+          key={book._id}
             className="card bg-base-300 shadow-md hover:shadow-xl transition rounded-lg"
           >
             <DisplayBook 
             id = {book._id}
             title={book.title} 
             price={book.price} 
+            image = {book.coverImageUrl}
             />
           </div>
   
