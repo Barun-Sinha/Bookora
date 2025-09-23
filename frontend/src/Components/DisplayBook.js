@@ -1,17 +1,33 @@
 
+import axios from 'axios';
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 // component to display individual book details 
-const DisplayBook = ({id, title, price }) => {
+const DisplayBook = ({id, title, price , image }) => { 
+
+  const isAdmin = useSelector((state) => state.user.user?.role === 'admin'); 
+
+  const handelDelte  = async(id) => {
+    try {
+      axios.delete(`http://localhost:5000/api/admin/books/${id}`, { withCredentials: true });
+      // Optionally, you might want to refresh the book list or give user feedback here
+      alert("Book deleted successfully");
+      // window.location.reload(); // Reload to reflect changes
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
+  }
+
   return (
     <>
       {/* Wrap the whole card in a Link for details navigation */}
       <Link to={`/book/${id}`} className="no-underline">
         <figure>
           <img
-            src="https://www.quercusbooks.co.uk/wp-content/uploads/2019/01/Spines-website-asset-new-logo.jpg?w=1920&h=560&crop=1"
-            alt={title}
+            src= {image} 
+             alt={title}
             className="h-56 w-full object-cover object-center rounded-t-lg"
           />
         </figure>
@@ -28,6 +44,14 @@ const DisplayBook = ({id, title, price }) => {
         <Link to={`/book/${id}`} className="btn btn-outline btn-sm">
           Details
         </Link>
+        {
+          isAdmin && (
+        <div>
+           <button className="btn btn-primary bg-red-500 btn-sm" onClick={() => handelDelte(id)}>Delete Book</button>
+        </div>
+          )
+        }
+       
       </div>
     </>
   )

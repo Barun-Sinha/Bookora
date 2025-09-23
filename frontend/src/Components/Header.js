@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { HomeIcon, ShoppingCart } from "lucide-react"; // you can use heroicons too
+import {HomeIcon, ShoppingCart, UserCircle } from "lucide-react"; // you can use heroicons too // you can use heroicons too
 import { useSelector ,useDispatch} from "react-redux";
 import { logout } from "../utils/userSlice.js";
 import axios from "axios";
 
 const Header = () => {
+ 
+  const [isOpen, setIsOpen] = useState(false);
+  const userInfo = useSelector((store) => store.user);
+  const cartSize  = useSelector((store) => store?.cart?.length);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { user , isAuthenticated } = useSelector((state) => state.user);
 
   const handelLogin = () => {
     // Implement login functionality here
-    navigate("/login");
-  };
+    navigate('/login');
+  }
+
 
   const handelLogout = async() => {
     try {
@@ -63,12 +67,12 @@ const Header = () => {
               <ShoppingCart size={22} />
               <span>Cart</span>
 
-              {/* Badge */}
-              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                0
-              </span>
-            </Link>
-          </div>
+            {/* Badge */}
+           <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+            {cartSize || 0}
+           </span>
+          </Link>
+         </div>
 
           {user?.role === 'admin' && (
               <button
@@ -83,13 +87,54 @@ const Header = () => {
           {isAuthenticated ? (
             <div className="dropdown dropdown-end cursor-pointer hover:text-blue-500 transition-colors duration-200">
             <div>
-              <button
-                className="text-2xl bg-blue-500 px-4 py-2 border-2 rounded-2xl text-white font-bold flex items-center justify-center 
-               hover:bg-blue-600 hover:scale-105 transition-all duration-200 ease-in-out"
-                onClick={handelLogout}
-              >
-                Logout
-              </button>
+              { 
+  userInfo ? (
+    <div tabIndex={0} className="flex items-center gap-2" onClick={() => setIsOpen(!isOpen)}>
+      <div
+        className="relative"
+        onMouseEnter={() => setIsOpen(true)}
+
+      >
+        {/* User Button */}
+        <div
+          className="flex items-center gap-2 px-3 py-2 bg-gray-300 rounded-full cursor-pointer 
+                     hover:bg-blue-100 transition-colors duration-200"
+        >
+          <UserCircle size={24} className="text-blue-600" />
+          <p className="text-gray-700 font-medium">
+            {userInfo?.user?.username}
+          </p>
+        </div>
+
+        {/* Dropdown */}
+        {isOpen && (
+          <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg overflow-hidden">
+            <ul className="flex flex-col">
+              <Link to="/profile" className="no-underline">
+              <li className="px-4 py-2 hover:bg-blue-50 cursor-pointer">Profile</li>
+              </Link>
+              <li className="px-4 py-2 hover:bg-blue-50 cursor-pointer">Wishlist</li>
+              <li className="px-4 py-2 hover:bg-blue-50 cursor-pointer" 
+              onClick={handelLogout}
+              >Sign Out</li>
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  ) : (
+    <button
+      className="text-2xl bg-blue-500 px-4 py-2 border-2 rounded-2xl text-white font-bold flex items-center justify-center 
+                 hover:bg-blue-600 hover:scale-105 transition-all duration-200 ease-in-out"
+      onClick={handelLogin}
+    >
+      Login   
+    </button>
+  )
+}
+
+        
+
             </div>
           </div>
           ) : (

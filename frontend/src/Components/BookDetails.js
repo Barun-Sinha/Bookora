@@ -1,10 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { addCart } from "../utils/cartSlice";
+import QuantitySelector from "./QuontitySelector";
 
 const BookDetails = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const isLogin = useSelector((state) => state.user.isAuthenticated);
+  const navigate = useNavigate();
+  const disp = useDispatch();
+  
+  const AddTocart = () => {
+    
+      if(!isLogin){
+        navigate('/login');
+      } 
+
+      disp(addCart({
+        id: book._id,
+        title: book.title,
+        price: book.price,
+      }))
+      
+  }
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -47,12 +68,15 @@ const BookDetails = () => {
         <div className="flex flex-col gap-4 ">
           <h2 className="text-3xl font-bold">{book?.title}</h2>
           <p className="text-lg text-gray-700">Author: {book?.author}</p>
+          <p className="text-lg text-gray-700">Genre: {book?.genre.toString(" ")}</p>
           <p className="text-xl font-semibold text-primary">
             Rs. {book.price}
           </p>
 
+          <QuantitySelector/>
+
           <div className="flex gap-4 justify-center mt-2">
-            <button className="btn btn-primary">Add to Cart</button>
+            <button className="btn btn-primary" onClick={()=>AddTocart()}>Add to Cart</button>
             <button className="btn btn-outline">Buy Now</button>
           </div>
 

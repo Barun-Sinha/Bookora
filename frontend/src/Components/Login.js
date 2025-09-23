@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../utils/userSlice";
 
 const LoginPage = () => {
-const [userName, setUserName] = useState("barun1");
+const [userName, setUserName] = useState("barun2");
 const [password, setPassword] = useState("123456");
 const [email, setEmail] = useState("");
 const [name, setName] = useState("");
@@ -24,10 +24,8 @@ const navigate = useNavigate();
         {
           emailOrUsername: userName,
           password: password,
-        },
-        {
-          withCredentials: true, // 🔥 ensures cookie is stored by browser
-        }
+        }, 
+        { withCredentials: true }
       );
       dispatch(login(res.data.user));
       return navigate("/");
@@ -50,14 +48,16 @@ const navigate = useNavigate();
             password: password,
             fullName: name,
             email: email
-        });
+        },
+       { withCredentials: true}
+      );
+       
         console.log(res.data);
+      
+        setUserName(userName);
+        setPassword(password);
+        setShowSignIn(false);
         setError("");
-        setUserName("")
-        setPassword("")
-        setName("")
-        setEmail("")
-        setShowSignIn(false)
 
     }catch(err){
       if (err.response && err.response.data && err.response.data.message) {
