@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { clearCart, removeCart } from "../utils/cartSlice";
 
 const Cart = () => {
+  const isLogin = useSelector((state) => state.user.isAuthenticated);
   const dispatch = useDispatch();
+  const navigate = useNavigate(); 
   const cartItems = useSelector((state) => state.cart); 
- 
 
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+    }
+  }, [isLogin, navigate]);
+
+ 
+  
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   const handleRemove = (id) => {

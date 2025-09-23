@@ -1,10 +1,10 @@
 
 import React from "react";
 import { UserCircle, Heart, LogOut, Edit } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
-
-
+  const user =  useSelector((state) => state.user.user);
 
   return (
     <div className="flex justify-center min-h-screen bg-gray-100 p-6">
@@ -14,8 +14,9 @@ const Profile = () => {
           <div className="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center">
             <UserCircle size={80} className="text-blue-600" />
           </div>
-          <h2 className="mt-4 text-2xl font-semibold text-gray-800">Barun</h2>
-          <p className="text-gray-500">Frontend Developer</p>
+          <h2 className="mt-4 text-2xl font-semibold text-gray-800">{user.fullName}</h2>
+          <p className="text-gray-500">Role: {user.role}</p>
+          <p className="text-gray-500">Email: {user.email}</p>
         </div>
 
         {/* Stats */}
@@ -28,10 +29,6 @@ const Profile = () => {
             <p className="text-xl font-bold text-gray-800">12</p>
             <p className="text-sm text-gray-500">Orders</p>
           </div>
-          <div className="text-center">
-            <p className="text-xl font-bold text-gray-800">5</p>
-            <p className="text-sm text-gray-500">Reviews</p>
-          </div>
         </div>
 
         {/* Actions */}
@@ -42,7 +39,7 @@ const Profile = () => {
           <button className="w-full flex items-center gap-3 px-4 py-2 rounded-xl bg-pink-50 hover:bg-pink-100 text-pink-700 font-medium transition">
             <Heart size={20} /> Wishlist
           </button>
-          <button className="w-full flex items-center gap-3 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-medium transition">
+          <button className="w-full flex items-center gap-3 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-medium transition" >
             <LogOut size={20} /> Sign Out
           </button>
         </div>

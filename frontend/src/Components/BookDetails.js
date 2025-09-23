@@ -9,7 +9,7 @@ const BookDetails = () => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const isLogin = useSelector((store) => store.user);
+  const isLogin = useSelector((state) => state.user.isAuthenticated);
   const navigate = useNavigate();
   const disp = useDispatch();
   
@@ -18,6 +18,7 @@ const BookDetails = () => {
       if(!isLogin){
         navigate('/login');
       } 
+
       disp(addCart({
         id: book._id,
         title: book.title,
@@ -67,6 +68,7 @@ const BookDetails = () => {
         <div className="flex flex-col gap-4 ">
           <h2 className="text-3xl font-bold">{book?.title}</h2>
           <p className="text-lg text-gray-700">Author: {book?.author}</p>
+          <p className="text-lg text-gray-700">Genre: {book?.genre.toString(" ")}</p>
           <p className="text-xl font-semibold text-primary">
             Rs. {book.price}
           </p>
