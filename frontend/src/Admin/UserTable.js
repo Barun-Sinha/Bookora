@@ -87,7 +87,7 @@ const handelDelete = async (id) => {
   const filteredUsers = users.filter(
     (user) =>
       user.username.toLowerCase().includes(search.toLowerCase()) ||
-      user.id.toString().includes(search)
+      user._id.toString().includes(search)
   );
 
   return (

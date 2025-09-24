@@ -1,24 +1,10 @@
 
-import axios from 'axios';
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 // component to display individual book details 
 const DisplayBook = ({id, title, price , image }) => { 
 
-  const isAdmin = useSelector((state) => state.user.user?.role === 'admin'); 
-
-  const handelDelte  = async(id) => {
-    try {
-      axios.delete(`http://localhost:5000/api/admin/books/${id}`, { withCredentials: true });
-      // Optionally, you might want to refresh the book list or give user feedback here
-      alert("Book deleted successfully");
-      // window.location.reload(); // Reload to reflect changes
-    } catch (error) {
-      console.error("Error deleting book:", error);
-    }
-  }
 
   return (
     <>
@@ -44,13 +30,7 @@ const DisplayBook = ({id, title, price , image }) => {
         <Link to={`/book/${id}`} className="btn btn-outline btn-sm">
           Details
         </Link>
-        {
-          isAdmin && (
-        <div>
-           <button className="btn btn-primary bg-red-500 btn-sm" onClick={() => handelDelte(id)}>Delete Book</button>
-        </div>
-          )
-        }
+  
        
       </div>
     </>
