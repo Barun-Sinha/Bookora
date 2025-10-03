@@ -61,9 +61,6 @@ const AddBookForm = () => {
         return;
       }
 
-      console.log("Book added successfully:", data);
-    
-
       // Reset form
       setBookData({
         title: "",

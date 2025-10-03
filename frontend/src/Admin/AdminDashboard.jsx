@@ -18,13 +18,14 @@ const AdminDashboard = () => {
     const response = await axios.get("http://localhost:5000/api/admin/authors", {
       withCredentials: true
     });
-    setAuthors(response.data);
-    
+    setAuthors(response.data);  
   }
 
   useEffect(() => { 
     getAuthor();
   }, [])
+
+  
   const totalBooks = allBooks.length;
   const totalUsers = allUsers.length;
   const totalAuthors = authors ? authors.length : 0;

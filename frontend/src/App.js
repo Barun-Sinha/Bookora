@@ -7,14 +7,11 @@ import { useDispatch } from 'react-redux';
 import BookDetails from './Components/BookDetails';
 import Cart from './Components/Cart'; 
 import Profile from './Components/Profile';
-import AdminDashboard from './Admin/AdminDashboard.jsx';
+import Sidebar from './Admin/Sidebar.js';
 import { useEffect } from 'react';
 import {setLoading , login , logout } from './utils/userSlice.js'
 import axios from 'axios';
-import UserTable from './Admin/UserTable.js';
-import AddBookForm from './Admin/AddBookForm.js';
-import AdminLayout from './Admin/AdminLayout.js';
-import CreateAuthor from './Admin/CreateAuthor.js';
+
 
 function App() {
 
@@ -54,12 +51,8 @@ function App() {
             <Route path='/book/:id' element = {<BookDetails/>}/>
             <Route path='/cart' element = {<Cart/>}/>
             <Route path='/login' element = {<Login/>}/>
-            <Route path='/admin' element = {<AdminLayout/>}>
-              <Route index element = {<AdminDashboard/>}/> 
-              <Route path='/admin/users' element = {<UserTable/>}/>
-              <Route path='/admin/books' element = {<AddBookForm/>}/>
-              <Route path='/admin/authors' element = {<CreateAuthor/>}/>
-            </Route>
+            <Route path='/admin' element = {<Sidebar/>}/>
+            
            
         </Route>
         <Route path='*' element = {<h1 className='text-center mt-20 text-3xl'>404 - Page Not Found</h1>}/>

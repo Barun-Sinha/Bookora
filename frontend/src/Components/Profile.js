@@ -17,6 +17,7 @@ const Profile = () => {
           <h2 className="mt-4 text-2xl font-semibold text-gray-800">{user.fullName}</h2>
           <p className="text-gray-500">Role: {user.role}</p>
           <p className="text-gray-500">Email: {user.email}</p>
+          <p className="text-gray-500">Id: {user._id}</p>
         </div>
 
         {/* Stats */}
